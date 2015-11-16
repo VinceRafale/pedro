@@ -1,0 +1,80 @@
+<ion-view view-title="Checkout" class="checkout-view cart-view">
+  <ion-content class="has-header">
+    <div class="list">
+      <div ng-if="products.length == 0">
+        <div class="empty-cart">
+          <i class="icon ion-ios-cart-outline"></i>
+          <h3 class="no-products">Your shopping cart is empty</h3>
+        </div>
+      </div>
+      <div ng-if="products.length > 0">
+        <div class="products-list">
+          <div class="product-list-item" ng-repeat="product in products">
+            <div class="row product-title-wrapper">
+              <span class="product-title">{{product.title}}</span>
+            </div>
+            <div class="row product-content-wrapper">
+              <div class="col">
+                <div class="product-picture">
+                  <pre-img ratio="_1_1" helper-class="main-image">
+                    <img ng-src="{{product.picture}}" spinner-on-load>
+                  </pre-img>
+                </div>
+                <div class="product-options-wrapper">
+                  <div class="row product-options">
+                    <div class="col col-75 select-option">
+                    </div>
+                    <div class="col col-25 select-option">
+                      <select >
+                        <option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" value="{{i}}">{{i}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row remove-product-wrapper">
+                    <div class="col col-center col-75"> <button class="button button-clear button-small button-assertive remove-product-button" ng-click="removeProductFromCart(product)">
+                        Remove
+                      </button>
+                    </div>
+                    <div class="col col-center col-25">
+                      <span class="product-price">${{product.price}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="item item-divider shop-section-title">
+        <span class="title-copy">Payment Method</span>
+      </div>
+      <a class="item item-icon-left add-new-card" href="#">
+        <i class="icon ion-card"></i>
+        Add new card
+      </a>
+      <div class="item item-divider shop-section-title">
+        <span class="title-copy">Totals</span>
+      </div>
+      <div class="item row padding totals">
+        <div class="col col-50">
+          <div class="row">Subtotal</div>
+          <div class="row">Tax</div>
+          <div class="row">Shipping</div>
+        </div>
+        <div class="col col-50 totals-numbers">
+          <div class="row">$135,00 USD</div>
+          <div class="row">$0,00 USD</div>
+          <div class="row">$34,95 USD</div>
+        </div>
+      </div>
+      <div class="item item-divider shop-section-title">
+        <span class="title-copy">Order Total</span>
+        <span class="order-total-value section-action">$180,95 USD</span>
+      </div>
+      <div class="row padding">
+        <button class="button button-block button-energized submit-order-btn" ng-click="goToOffice()">
+          Place Order
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

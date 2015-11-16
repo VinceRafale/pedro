@@ -1,0 +1,19 @@
+<ion-view view-title="Shop" class="shop-popular-view" class="has-header">
+    <ion-content class="has-header">
+        <div class="row shop-products-narrow-cards-outer">
+            <div ng-repeat="pitch in pitches" class="col col-50 shop-product-narrow-card" ng-click="selectPitch(pitch)">
+                <div class="list card">
+                    <div class="item item-image">
+                        <pre-img ratio="_1_1" helper-class="main-image">
+                            <img ng-src="img/cards/{{pitch.cards[2].bgImage}}" spinner-on-load>
+                        </pre-img>
+                    </div>
+                    <div class="item item-body">
+                        <h2 class="card-title">{{pitch.name}}</h2>
+                        <p>$175</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

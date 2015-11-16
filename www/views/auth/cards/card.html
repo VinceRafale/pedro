@@ -1,0 +1,16 @@
+ <ion-view class="welcome-view" cache-view="false" class="has-header">
+  <ion-content scroll="false" on-swipe-left="onSwipeLeft()"  on-swipe-right="onSwipeRight()" style="" class="has-header" style="width: 100%; height: 100%;background-size: 100% 100%;background-image: url({{ background }}); background-repeat: no-repeat;">
+    <!--<div multi-bg="bgs" interval="3000" helper-class="facebook-welcome-bg">-->
+    <div  style="width: 100%; height: 100%;background-size: 100% 100%;background-image: url({{ background }}); background-repeat: no-repeat;">
+      <div class="top-content row has-header">
+        <div class="app-copy col col-center" ng-if="index == 1">
+        </div>
+      </div>
+      <div class="bottom-content row">
+        <div class="col col-bottom" ng-if="index == 1">
+          <section ng-include="'views/app/legal/legal-notice.html'"></section>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

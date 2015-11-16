@@ -1,0 +1,23 @@
+<ion-modal-view class="auth-view modal-view">
+    <ion-header-bar>
+        <h1 class="title modal-title">Pitch</h1>
+        <a class="button button-clear" ng-click="pitchDialog.hide()">Cancel</a>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="row form-wrapper">
+            <div class="col">
+                <form name="recover_password_form" class="" novalidate>
+                    <div class="form-fields-outer list list-inset">
+                        <button type="submit" class="recover-password button button-block" ng-click="broadcast(pitch)" >
+                            Broadcast
+                        </button>
+                         <button type="submit" class="recover-password button button-block" ng-click="share(pitch)" >
+                            Share
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ion-content>
+</ion-modal-view>

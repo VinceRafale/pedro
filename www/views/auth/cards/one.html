@@ -1,0 +1,27 @@
+<ion-view class="welcome-view" cache-view="false">
+  <ion-nav-bar>
+    <ion-nav-back-button>
+    </ion-nav-back-button>
+    <ion-nav-buttons side="right">
+      <a class="button button-clear button-light" ui-sref="app.feed">
+        Sponsor
+      </a>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content scroll="false">
+    <div multi-bg="bgs" interval="3000" helper-class="facebook-welcome-bg">
+      <div class="top-content row">
+        <div class="app-copy col col-center">
+          <a class="dont-have-facebook button button-clear button-block button-light" on-swipe-left="onSwipeLeft()" ui-sref="dont-have-facebook">
+            <b> Swipe to Learn More</b>
+          </a>
+        </div>
+      </div>
+      <div class="bottom-content row">
+        <div class="col col-bottom">
+          <section ng-include="'views/app/legal/legal-notice.html'"></section>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,64 @@
+<ion-view class="profile-view" cache-view="false" view-title="Profile">
+    <ion-header-bar>
+        <h1 class="title modal-title">Sponsor</h1>
+        <a class="button button-clear" ng-click="back()"><span class="icon ion-close"></span></a>
+    </ion-header-bar>
+    <ion-content has-bouncing='false' class="profile-content" class="has-header" >
+        <div class="row profile-data">
+            <div class="col">
+                <ion-slide-box class="profile-slides" on-slide-changed="slideHasChanged($index)">
+                    <ion-slide>
+                        <div class="row slide-content">
+                            <div class="col col-center user-data">
+                                <!-- We need a wrapper with width set for the preload image directive -->
+                                <div class="user-image-outer">
+                                    <pre-img ratio="_1_1" helper-class="rounded-image">
+                                        <img class="user-image" ng-src="img/{{$root.pitch.sponsor.imgURL}}" spinner-on-load>
+                                    </pre-img>
+                                </div>
+                                <h2 class="user-name">{{$root.pitch.sponsor.name}}</h2>
+                                <p class="user-resume">
+                                    <b>Ruby  </b>  &nbsp;&nbsp;<b>Social Champion</b>
+                                </p>
+                            </div>
+                        </div>
+                    </ion-slide>
+                    <ion-slide>
+                        <div class="row slide-content">
+                            <div class="col col-center user-data">
+                                <p class="user-resume">
+                                   After working for 15 Years as a nurse and living paycheck to paycheck I decided I needed more financial security in my life.
+                                    After using the product for one week I was hooked. I knew this is what I wanted to do.
+                                </p>
+                            </div>
+                        </div>
+                    </ion-slide>
+                </ion-slide-box>
+            </div>
+        </div>
+        <div class="row user-interactions">
+            <div class="col">
+                <div class="row split-actions" >
+                    <div class="col">
+
+                           <button class="button button-block highlighted">
+                            Call
+                        </button>
+
+                    </div>
+                    <div class="col">
+                        <button class="button button-block">
+                            Message
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+    </ion-content>
+</ion-view>

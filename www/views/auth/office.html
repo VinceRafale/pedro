@@ -1,0 +1,68 @@
+<ion-view view-title="Settings" class="settings-view profile-view" cache-view="false">
+    <ion-content class="profile-content">
+        <div class="row profile-data">
+            <div class="col">
+                <ion-slide-box class="profile-slides" on-slide-changed="slideHasChanged($index)">
+                    <ion-slide>
+                        <div class="row slide-content">
+                            <div class="col col-center user-data">
+                                <!-- We need a wrapper with width set for the preload image directive -->
+                                <div class="user-image-outer">
+                                    <pre-img ratio="_1_1" helper-class="rounded-image">
+                                        <img class="user-image" ng-src="img/sally.jpg" spinner-on-load>
+                                    </pre-img>
+                                </div>
+                                <h2 class="user-name">{{$root.user.name}}</h2>
+                                <p class="user-resume">
+                                    <b>Ruby </b>  &nbsp;&nbsp;<b>Social Champion</b>
+                                </p>
+                            </div>
+                        </div>
+                    </ion-slide>
+                    <ion-slide>
+                        <div class="row slide-content">
+                            <div class="col col-center user-data">
+                                <p class="user-resume">
+                                    After working for 15 Years as a nurse and living paycheck to paycheck I decided I needed more financial security in my life.
+                                    After using the product for one week I was hooked. I knew this is what I wanted to do.
+                                </p>
+                            </div>
+                        </div>
+                    </ion-slide>
+                </ion-slide-box>
+            </div>
+        </div>
+        <div class="list">
+            <div class="item item-divider title">
+                Account
+            </div>
+            <a class="item item-icon-left settings-option">
+                <i class="icon ion-ios-cart-outline"></i>
+                Orders
+            </a>
+            <a class="item item-icon-left settings-option" ui-sref="pitches">
+                <i class="icon ion-social-usd-outline"></i>
+                Pitches
+            </a>
+            <div class="item item-divider title">
+                More
+            </div>
+            <a class="item item-icon-left settings-option" ng-click="showTerms()">
+                <i class="icon ion-ios-information-outline"></i>
+                Terms of Service
+            </a>
+            <a class="item item-icon-left settings-option" ng-click="clearBroadcasts()">
+                <i class="icon ion-ios-locked-outline"></i>
+                Clear Broadcasts
+            </a>
+            <a class="item item-icon-left settings-option">
+                <i class="icon ion-ios-help-outline"></i>
+                Help
+            </a>
+            <a class="item item-icon-left settings-option" ng-click="logout()">
+                <i class="icon ion-ios-close-outline"></i>
+                Sign Out
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

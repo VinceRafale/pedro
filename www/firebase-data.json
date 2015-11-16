@@ -1,0 +1,54 @@
+{
+  "pitches": {
+
+      "1": {
+        "cards": [
+          {
+            "bgImage": "temp.png"
+          },
+          {
+            "bgImage": "two.png"
+          },
+          {
+            "bgImage": "three.png"
+          },
+          {
+            "bgImage": "four.png"
+          }
+        ],
+        "bar": "bar-royal",
+        "sponsor": {
+          "imgURL": "sarah.jpg",
+          "name": "SarachSmith",
+          "title": "Ruby",
+          "description": "Thisisthedescription"
+        }
+
+    },
+
+      "2": {
+        "cards": [
+          {
+            "bgImage": "temp.png"
+          },
+          {
+            "bgImage": "two.png"
+          },
+          {
+            "bgImage": "three.png"
+          },
+          {
+            "bgImage": "four.png"
+          }
+        ],
+        "bar": "bar-royal",
+        "sponsor": {
+          "imgURL": "sarah.jpg",
+          "name": "SarachSmith",
+          "title": "Ruby",
+          "description": "Thisisthedescription"
+        }
+      }
+
+  }
+}
