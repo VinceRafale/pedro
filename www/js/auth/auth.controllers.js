@@ -33,8 +33,11 @@ angular.module('your_app_name.auth.controllers', [])
   };
 })
 
-.controller('CreateAccountCtrl', function($scope, $state, $firebaseAuth,  $rootScope){
+.controller('CreateAccountCtrl', function($scope, $state, $firebaseAuth,  $rootScope, FlowService){
 
+        if($rootScope.pitch == undefined){
+            $state.go('loading');
+        }
 
 
     $scope.signupData = {};
@@ -77,13 +80,73 @@ angular.module('your_app_name.auth.controllers', [])
             });
         }).then(function(authData) {
             console.log("Logged in as:", authData.uid);
-            $state.go('simpleCheckOut');
+            FlowService.forward();
         }).catch(function(error) {
             console.error("Error: ", error);
         });
 
 
 	};
+
+        $scope.onSwipeRight = function(){
+            FlowService.back();
+        }
+
+
+    $scope.createCustomerAccount = function() {
+
+        var data = JSON.stringify({
+            "SponsorID": "US9062933",
+            "CountryCode": "US",
+            "BEType": "CUST",
+            "Login": {
+                "ID": $scope.signupData.email,
+                "Password": "abc123",
+                "PasswordHint": "abc123"
+            },
+            "Person": {
+                "Name": [
+                    {
+                        "Type": "LOCAL",
+                        "Given": $scope.signupData.name.split(' ').slice(0, -1).join(' '),
+                        "Family": $scope.signupData.name.split(' ').slice(-1).join(' ')
+                    }
+                ],
+                "Address": {
+                    "Street1": $scope.signupData.street,
+                    "City": $scope.signupData.city,
+                    "Region": $scope.signupData.stateCd,
+                    "PostalCode": $scope.signupData.postal,
+                    "CountryCode": "US"
+                }
+            }
+        });
+
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === this.DONE) {
+                console.log(this.responseText);
+            }
+        });
+
+        xhr.open("POST", "https://test.nuskin.com/account-service/api/v1/account");
+        xhr.setRequestHeader("client_id", "75e9a0cd9fae49aeb565a01c2bb0df5c");
+        xhr.setRequestHeader("client_secret", "a522d7b86a0f4f008FDA15E3E605BF22");
+        xhr.setRequestHeader("content-type", "application/json");
+        xhr.setRequestHeader("authorization", "Basic Ym9iOmJvYnNwYXNzd29yZA==");
+        xhr.setRequestHeader("cache-control", "no-cache");
+        xhr.setRequestHeader("postman-token", "be5809f1-5fec-c224-5ddb-6b831e1cb59c");
+
+        xhr.send(data);
+
+    }
+
+
+    $scope.onSwipeRight = function(){
+        FlowService.back();
+    }
 })
 
 .controller('LoginCtrl', function($scope, $state, $ionicModal, $rootScope, $firebaseAuth){
@@ -161,7 +224,7 @@ angular.module('your_app_name.auth.controllers', [])
 })
 
 
-  .controller('CardCtrl', function($scope, $state, $stateParams, CardService, $rootScope){
+  .controller('SimpleCtrl', function($scope, $state, $stateParams, CardService, $rootScope, FlowService){
 
 
       $rootScope.showSponserHeader = true;
@@ -172,36 +235,32 @@ angular.module('your_app_name.auth.controllers', [])
             $state.go('loading');
         }
 
-       var cards = $rootScope.pitch.cards;
+       var card = $rootScope.pitch.cards[$stateParams.index];
 
 
-
-
-      $scope.background = "img/cards/" + cards[$stateParams.index - 1].bgImage;
+      $scope.background = "img/cards/" + card.bgImage;
 
 
 
       $scope.onSwipeLeft = function(){
-        if(cards.length > $stateParams.index){
-          $state.go('card', {'index': parseInt($stateParams.index)  + 1});
-        }else{
-          $state.go('product');
-        }
-
+          FlowService.forward();
       }
 
 
       $scope.onSwipeRight = function(){
-        if($stateParams.index > 1){
-          $state.go('card', {'index': parseInt($stateParams.index) - 1});
-        }else{
-          //alert("out of cards");
-        }
+          FlowService.back();
+
       }
 
   })
-    .controller('ProductCardCtrl', function($scope, $stateParams, ShopService, $state,$ionicPopup, $ionicLoading) {
-        var productId = $stateParams.productId;
+    .controller('ProductCardCtrl', function($scope, $rootScope,$stateParams, ShopService, $state,$ionicPopup, $ionicLoading, FlowService) {
+
+
+        if($rootScope.pitch == undefined){
+            $state.go('loading');
+        }
+
+        var productId = $rootScope.pitch.cards[$rootScope.index].productId;
 
         ShopService.getProduct(productId).then(function(product){
             $scope.product = product;
@@ -211,12 +270,12 @@ angular.module('your_app_name.auth.controllers', [])
 
 
         $scope.onSwipeLeft = function(){
-            $state.go('shipping');
+            FlowService.forward();
         }
 
 
         $scope.onSwipeRight = function(){
-            $state.go('card', {'index': 1});
+            FlowService.back();
         }
 
         // show add to cart popup on button click
@@ -285,7 +344,22 @@ angular.module('your_app_name.auth.controllers', [])
 
         $scope.back = function (){
 
+            $rootScope.showSponserHeader = true;
             window.history.back();
+        }
+
+
+    })
+
+    .controller('StarterKitCtrl', function($scope, FlowService) {
+
+        $scope.onSwipeLeft = function(){
+            FlowService.forward();
+        }
+
+
+        $scope.onSwipeRight = function(){
+            FlowService.back();
         }
 
 
@@ -295,7 +369,7 @@ angular.module('your_app_name.auth.controllers', [])
         $rootScope.showSponserHeader = false;
 
         $scope.back = function (){
-
+            $rootScope.showSponserHeader = true;
             window.history.back();
         }
 
@@ -305,6 +379,9 @@ angular.module('your_app_name.auth.controllers', [])
 
         var name = "Sally Smith";
 
+        var ref = new Firebase("https://nuskin.firebaseio.com");
+        var authData = ref.getAuth();
+
 
         if($rootScope.user){
             name = $rootScope.user.name;
@@ -313,22 +390,52 @@ angular.module('your_app_name.auth.controllers', [])
         }
         //$scope.products = ShopService.getCartProducts();
 
+
+
+        var myPitchesRef = new Firebase("https://nuskin.firebaseio.com/users/" + authData.uid + "/pitches" );
+
+        $scope.mypitches = [];
+        myPitchesRef.on('value', function(snap) {
+
+            $scope.mypitches = snap.val();
+
+        });
+
+
         var pitches = [
             {
                 "name": "peppermint",
-                "id": 1,
+                "id": 0,
                 "cards": [
                     {
-                        "bgImage": "temp.png"
+                        "bgImage": "temp.png",
+                        "template": "simple"
                     },
                     {
-                        "bgImage": "two.png"
+                        "bgImage": "two.png",
+                        "template": "simple"
                     },
                     {
-                        "bgImage": "three.png"
+                        "bgImage": "three.png",
+                        "template": "simple"
                     },
                     {
-                        "bgImage": "four.png"
+                        "bgImage": "four.png",
+                        "template": "simple"
+                    },
+                    {
+                        "bgImage": "four.png",
+                        "template": "simple"
+                    },
+                    {
+                        "productId": "0",
+                        "template": "product"
+                    },
+                    {
+                        "template": "customer-account"
+                    },
+                    {
+                        "template": "simple-checkout"
                     }
                 ],
                 "bar": "bar-balanced",
@@ -342,19 +449,34 @@ angular.module('your_app_name.auth.controllers', [])
             {
 
                 "name": "lavender",
-                "id": 2,
+                "id": 1,
                 "cards": [
                     {
-                        "bgImage": "temp.png"
+                        "bgImage": "temp.png",
+                        "template": "simple"
                     },
                     {
-                        "bgImage": "two.png"
+                        "bgImage": "two.png",
+                        "template": "simple"
                     },
                     {
-                        "bgImage": "2-three.png"
+                        "bgImage": "2-three.png",
+                        "template": "simple"
                     },
                     {
-                        "bgImage": "2-four.png"
+                        "bgImage": "2-four.png",
+                        "template": "simple"
+
+                    },
+                    {
+                        "productId": "0",
+                        "template": "product"
+                    },
+                    {
+                        "template": "customer-account"
+                    },
+                    {
+                        "template": "simple-checkout"
                     }
                 ],
                 "bar": "bar-royal",
@@ -366,12 +488,12 @@ angular.module('your_app_name.auth.controllers', [])
                 }
             }
         ];
+
+
         $scope.pitches = pitches;
 
-
-
-
         $ionicModal.fromTemplateUrl('views/auth/cards/modals/pitch.html', {
+            cssClass: 'edit-pitch-popup',
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function(modal) {
@@ -379,23 +501,75 @@ angular.module('your_app_name.auth.controllers', [])
         });
 
 
+        $ionicModal.fromTemplateUrl('views/auth/cards/modals/new-pitch.html', {
+            cssClass: 'edit-pitch-popup',
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.newPitchDialog = modal;
+        });
 
-        $scope.selectPitch = function(pitch){
+
+
+        $scope.selectPitch = function(id, pitch){
+            pitch.id = id;
             $scope.pitch = pitch;
             $scope.pitchDialog.show();
 
         }
 
+        $scope.createPitchDialog = function(){
+
+            $scope.newPitchDialog.show();
+        }
+
 
         $scope.share = function(pitch){
-
-
-
 
             window.plugins.socialsharing.share('Rediscover natural ways to live better',
                 pitch.name,
                 'img/epoch.jpeg',
-                'http://pedro-nuskin.s3-website-us-west-2.amazonaws.com/#/p/' + pitch.id + '/' + $rootScope.user.uid);
+                'http://pedro-nuskin.s3-website-us-west-2.amazonaws.com/#/p/' + pitch.id + '/' + authData.uid);
+
+        }
+
+
+        $scope.shareApp = function(pitch){
+
+            if(!authData.uid){
+                alert("not logged in");
+            }
+
+            window.Branch.link({
+                channel: 'sms',
+                feature: 'share',
+                data: {
+                    "+pitch_id": pitch.id,
+                    "+sponsor_id": authData.uid,
+                    "$og_title": "Pitch",
+                    "$og_image_url": "mysite.com/image.png",
+                    "$desktop_url": "mysite.com/article1234"
+                }
+            }, function(err, link) {
+                if (!err) {
+                    window.plugins.socialsharing.share('Rediscover natural ways to live better',
+                        pitch.name,
+                        'img/epoch.jpeg',
+                        link);
+                }else{
+                    alert("error getting link" + err);
+                }
+            });
+
+
+        }
+
+        $scope.edit = function(pitch){
+
+            $rootScope.editPitch = pitch;
+            $scope.pitchDialog.hide();
+            $state.go('edit-pitch');
+
         }
 
 
@@ -411,8 +585,6 @@ angular.module('your_app_name.auth.controllers', [])
                  delete pitch.$$hashKey;
                  console.log("location", pitch);
                  locationRef.set(pitch, success());
-
-
              });
 
          } ;
@@ -423,52 +595,98 @@ angular.module('your_app_name.auth.controllers', [])
             $state.go('loading');
         }
 
+        $scope.newPitch = {};
+        $scope.newPitch.name = "";
+
+        $scope.createPitch = function(){
+
+
+            var newPitch = {
+                "name": $scope.newPitch.name,
+                "owner": "Jim Bob",
+                "bar": "bar-balanced",
+                "cards":[],
+                "sponsor": {
+                    "imgURL": "dean.png",
+                    "name": $rootScope.user.name,
+                    "title": "Blue Diamond",
+                    "description": "Thisisthedescription"
+                }
+            };
+
+           var pitchesRef = new Firebase("https://nuskin.firebaseio.com/users/" + authData.uid + "/pitches");
+            var newRef =  pitchesRef.push(newPitch);
+
+
+           // var userPitchesRef = new Firebase("https://nuskin.firebaseio.com/users/" + authData.uid + "/pitches/" + newID +"/id");
+            //userPitchesRef.set({"name": $scope.newPitch.name, "id": newID});
+            $scope.newPitchDialog.hide();
+        }
+
+
+        $scope.backToOffice = function(){
+            $state.go('office');
+        }
+
 
     })
 
-.controller('PitchCtrl', function($scope,$stateParams, $rootScope, $state ){
+.controller('PitchCtrl', function($scope,$stateParams, $rootScope, $state, FlowService ){
 
         var userId = $stateParams.userId;
         var pitchId = $stateParams.pitchId;
-
-        var pitchRef = new Firebase("https://nuskin.firebaseio.com/pitches/" + pitchId);
-        var userRef = new Firebase("https://nuskin.firebaseio.com/users/" + userId);
-
-        pitchRef.on("value", function(snapshot) {
-            var pitch = snapshot.val();
-            $rootScope.pitch = pitch;
-            userRef.on("value", function(userSnapshot) {
-                $rootScope.pitch.sponsor = userSnapshot.val();
-
-                $rootScope.bar = $rootScope.pitch.bar;
-                $state.go('card', {'index': 1});
-
-            });
-        });
-
+        FlowService.loadPitch(userId, pitchId);
 
 })
+
 
     .controller('ForgotPasswordCtrl', function($scope){
 
     })
+    .controller('MyWhyCtrl', function($scope, FlowService){
+        $scope.onSwipeLeft = function(){
+            FlowService.forward();
+        }
 
+
+        $scope.onSwipeRight = function(){
+            FlowService.back();
+        }
+    })
     .controller('OfficeCtrl', function($scope, $ionicHistory, $rootScope, $state){
+
+
+        if($rootScope.user === null || $rootScope.user === undefined){
+
+
+            var ref = new Firebase("https://nuskin.firebaseio.com");
+            var authData = ref.getAuth();
+
+
+
+
+            var userRef = new Firebase("https://nuskin.firebaseio.com/users/" + authData.uid);
+
+            userRef.on("value", function(snapshot) {
+
+                $rootScope.user = snapshot.val();
+            });
+
+        }
+
+
         $rootScope.showSponserHeader = false;
 
 
         $scope.logout = function(){
-
             var ref = new Firebase("https://nuskin.firebaseio.com");
             ref.unauth();
-            alert(ref.getAuth());
             $state.go('loading');
         }
 
         $scope.clearBroadcasts = function(){
             var locationRef = new Firebase("https://nuskin.firebaseio.com/locations");
-            locationRef.set({}, success());
-
+            locationRef.set({}, function(data){console.log("broadcasts clear")});
         }
 
     })
@@ -510,46 +728,17 @@ angular.module('your_app_name.auth.controllers', [])
     })
 
 
-    .controller('LoadingCtrl', function($scope, $ionicLoading, $timeout, $rootScope, $state, $ionicNavBarDelegate){
+    .controller('LoadingCtrl', function($scope, $ionicLoading, $timeout, $rootScope, $state, FlowService){
 
-       /* $ionicLoading.show({
-            duration: 30000,
-            noBackdrop: true,
-            template: '<p class="item-icon-left">Finding Sponsor...<ion-spinner icon="lines"/></p>'
-        });*/
+        /*
 
-        $rootScope.loggingin = false;
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position){
-                var lat = Math.round(position.coords.latitude * 10);
-                var long =  Math.round(position.coords.longitude * 10);
-                var geoLoc = "loc" + lat + "x" + long;
-                var pitchRef = new Firebase("https://nuskin.firebaseio.com/locations/" + encodeURI(geoLoc));
-
-                pitchRef.on("value", function(snapshot) {
-
-                    if(!$rootScope.loggingin){
-                        var pitch = snapshot.val();
-                        $rootScope.pitch = pitch;
-                        console.log("Added item to rootscope", $rootScope.pitch);
-                        $rootScope.bar = pitch.bar;
-                        $rootScope.sponsorImg = 'img/' + pitch.sponsor.imgURL;
-                        console.log($rootScope.sponsorImg);
-                        $rootScope.showSponserHeader = true;
-                        $ionicLoading.hide();
-                        $state.go('card', {'index': 1});
-
-                    }
-
-                });
-
-            });
+        if(window.localStorage.initilized){
+            FlowService.loadPitchByGeo();
         }
+        */
 
 
         $scope.goToLogin = function(){
-            //alert("hello");
             $rootScope.loggingin = true;
             $state.go('login');
         }

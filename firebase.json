@@ -1,9 +1,72 @@
-{
-  "firebase": "nuskin",
-  "public": "www",
-  "ignore": [
-    "firebase.json",
-    "**/.*",
-    "**/node_modules/**"
-  ]
-}
+[
+  {
+    "name": "peppermint",
+    "id": 1,
+    "cards": [
+      {
+        "bgImage": "temp.png",
+        "template": "simple"
+      },
+      {
+        "bgImage": "two.png",
+        "template": "simple"
+      },
+      {
+        "bgImage": "three.png",
+        "template": "simple"
+      },
+      {
+        "bgImage": "four.png",
+        "template": "simple"
+      },
+      {
+        "bgImage": "four.png",
+        "template": "simple"
+      },
+      {
+        "productId": "0",
+        "template": "product"
+      },
+      {
+        "template": "customer-account"
+      },
+      {
+        "template": "simple-checkout"
+      }
+    ],
+    "bar": "bar-balanced"
+  },
+  {
+    "name": "lavender",
+    "id": 2,
+    "cards": [
+      {
+        "bgImage": "temp.png",
+        "template": "simple"
+      },
+      {
+        "bgImage": "two.png",
+        "template": "simple"
+      },
+      {
+        "bgImage": "2-three.png",
+        "template": "simple"
+      },
+      {
+        "bgImage": "2-four.png",
+        "template": "simple"
+      },
+      {
+        "productId": "0",
+        "template": "product"
+      },
+      {
+        "template": "customer-account"
+      },
+      {
+        "template": "simple-checkout"
+      }
+    ],
+    "bar": "bar-royal"
+  }
+]

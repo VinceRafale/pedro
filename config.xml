@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.startapplabs.ionTheme-1" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>ionTheme_1</name>
+<widget id="com.nuskin.enterprise.prototype" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Pitch</name>
   <description>
     A FULL app template. Perfect as a starter project for Ionic Framework and Cordova.
   </description>
   <author email="info@startapplabs.com" href="http://startapplabs.com/">
-    StartApp Labs Team
+   NuSkin
   </author>
   <content src="index.html"/>
   <access origin="*"/>

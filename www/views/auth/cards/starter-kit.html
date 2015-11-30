@@ -1,0 +1,62 @@
+<ion-view class=" product-view" cache-view="false">
+    <ion-content overflow-scroll="true"  class="has-header" on-swipe-left="onSwipeLeft()"  on-swipe-right="onSwipeRight()">
+        <div class="product-card-content">
+            <div class="item item-image" style="max-height: 280px">
+                <pre-img ratio="_1_1" helper-class="main-image">
+                    <img ng-src="img/cards/starter.png" spinner-on-load >
+                </pre-img>
+            </div>
+            <div class="item item-body add-to-cart-popup">
+                <h2 class="product-title">Starter Pack</h2>
+                <div class="row">
+                    <div class=" col col-75">
+                        <p class="product-like"><i class="icon ion-heart"></i>Kit</p>
+                        <p class="likes"><i>$525</i></p>
+                    </div>
+
+                    <div class="col col-25">
+                        <label class="item item-input">
+                            <input type="number" placeholder="1" value="1">
+                        </label>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="item item-body">
+                <p class="product-description">Get your business off the ground quickly with a starter kit.</p>
+            </div>
+        </div>
+        <div class="item item-divider shop-section-title">
+            <span class="title-copy">Included Products</span>
+        </div>
+        <div class="row shop-products-narrow-cards-outer shop-product-cards-scroller">
+            <div class="col col-50 shop-product-narrow-simple" ui-sref="app.product-detail({productId: related_product._id})">
+                <div class="list simple">
+                    <div class="item item-image">
+                        <pre-img ratio="_1_1" helper-class="main-image">
+                            <img ng-src="img/cards/starter-product1.png" spinner-on-load>
+                        </pre-img>
+                    </div>
+                    <div class="item item-body">
+                        <h2 class="simple-title">TRU FACE LINE CORRECTOR</h2>
+                        <p class="simple-description"><b>$25</b> - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-50 shop-product-narrow-simple" ui-sref="app.product-detail({productId: related_product._id})">
+                <div class="list simple">
+                    <div class="item item-image">
+                        <pre-img ratio="_1_1" helper-class="main-image">
+                            <img ng-src="img/cards/starter-product2.png" spinner-on-load>
+                        </pre-img>
+                    </div>
+                    <div class="item item-body">
+                        <h2 class="simple-title">AGELOC TRU FACE ESSENCE ULTRA</h2>
+                        <p class="simple-description"><b>$25</b> - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

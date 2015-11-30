@@ -5,12 +5,18 @@ angular.module('underscore', [])
 
 
 
+var onResume = function() {
+  window.Branch.init('key_test_flpGUS7FifTtYfqYqyPvhackDqbU0UbQ');
+};
+
+
 angular.module('your_app_name', [
   'ionic',
   'ngIOS9UIWebViewPatch',
   'your_app_name.common.directives',
   'your_app_name.app.controllers',
   'your_app_name.auth.controllers',
+  'your_app_name.edit.controllers',
   'your_app_name.app.services',
   'your_app_name.views',
   'underscore',
@@ -27,22 +33,24 @@ angular.module('your_app_name', [
   }
 })
 
-.run(function($ionicPlatform, $rootScope, $ionicHistory, $firebaseObject, CardService) {
+.run(function($ionicPlatform, $rootScope,$state, $ionicHistory, $firebaseObject, CardService, FlowService) {
 
-
-
-      $rootScope.bar = "bar-light";
+  $rootScope.bar = "bar-light";
 
 
   $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
+
+    document.addEventListener('resume', onResume, false);
+
+    FlowService.init();
+
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
 
   });
 })
@@ -224,10 +232,10 @@ angular.module('your_app_name', [
       })
 
 
-    .state('card', {
-        url: "/card/:index",
-        templateUrl: "views/auth/cards/card.html",
-        controller: 'CardCtrl',
+    .state('simple', {
+        url: "/simple/:index",
+        templateUrl: "views/auth/cards/simple.html",
+        controller: 'SimpleCtrl',
         cache: false
       })
 
@@ -239,9 +247,16 @@ angular.module('your_app_name', [
         controller: 'ProductCardCtrl'
       })
 
-      .state('shipping', {
-        url: "/shipping",
-        templateUrl: "views/auth/cards/shipping-address.html",
+      .state('starter-kit', {
+        url: "/starter-kit",
+        templateUrl: "views/auth/cards/starter-kit.html",
+        cache: false,
+        controller: 'StarterKitCtrl'
+      })
+
+      .state('customer-account', {
+        url: "/customer-account",
+        templateUrl: "views/auth/cards/customer-account.html",
         controller: "CreateAccountCtrl"
       })
 
@@ -253,6 +268,24 @@ angular.module('your_app_name', [
 
 
       })
+
+      .state('mywhy', {
+        cache: false,
+        url: "/mywhy",
+        templateUrl: "views/auth/cards/profile.html",
+        controller: "MyWhyCtrl"
+
+
+      })
+      .state('video', {
+        cache: false,
+        url: "/video",
+        templateUrl: "views/auth/cards/video.html",
+        controller: "MyWhyCtrl"
+
+
+      })
+
 
       .state('sponsor', {
         url: "/sponsor",
@@ -289,9 +322,9 @@ angular.module('your_app_name', [
 
       })
 
-      .state('simpleCheckOut', {
-        url: "/simpleCheckOut",
-        templateUrl: "views/auth/cards/checkout.html",
+      .state('simple-checkout', {
+        url: "/simple-checkout",
+        templateUrl: "views/auth/cards/simple-checkout.html",
         cache: false,
         controller: "SimpleCheckoutCtrl"
 
@@ -299,11 +332,23 @@ angular.module('your_app_name', [
 
       .state('p', {
         url: "/p/:pitchId/:userId",
-        templateUrl: "views/auth/cards/LoadingPitch.html",
+        templateUrl: "views/auth/cards/loading-pitch.html",
         cache: false,
         controller: "PitchCtrl"
 
       })
+
+
+
+  //EDIT_ROUTES
+      .state('edit-pitch', {
+        url: "/edit-pitch",
+        templateUrl: "views/auth/cards/edit/pitch-cards.html",
+        cache: false,
+        controller: "EditPitchCtrl"
+
+      })
+
 
 ;
 

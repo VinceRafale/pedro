@@ -7,12 +7,192 @@ angular.module('your_app_name.app.services', [])
   };
 
   this.getLoggedUser = function(){
-
     return (window.localStorage.your_app_name_user) ?
       JSON.parse(window.localStorage.your_app_name_user) : null;
   };
 
 })
+
+
+    .service('FlowService', function ($ionicPlatform, $rootScope, $state){
+
+
+
+      var start = function(){
+        $rootScope.index = 0;
+        var nextCard = $rootScope.pitch.cards[$rootScope.index];
+        $state.go(nextCard.template, {"index": $rootScope.index });
+      };
+
+
+      this.loadPitch = function(sponsorId, pitchId){
+        load(sponsorId, pitchId);
+      };
+
+      var load = function(sponsorId, pitchId){
+
+        if(isNaN(pitchId)){
+          var pitchRef = new Firebase("https://nuskin.firebaseio.com/users/" + sponsorId + '/pitches/' + pitchId);
+          pitchRef.on("value", function(snapshot) {
+
+            var pitch = snapshot.val();
+            if(pitch == null){
+              console.debug("*** pitch is null:");
+            }else{
+              $rootScope.pitch = pitch;
+              $rootScope.bar = pitch.bar;
+              $rootScope.sponsorImg = 'img/' + pitch.sponsor.imgURL;
+              $rootScope.showSponserHeader = true;
+              start();
+            }
+
+          });
+        }else{
+
+          var  npitchRef = new Firebase("https://nuskin.firebaseio.com/pitches/" + pitchId);
+          var userRef = new Firebase("https://nuskin.firebaseio.com/users/" + sponsorId );
+          npitchRef.on("value", function(snapshot) {
+
+            var pitch = snapshot.val();
+            $rootScope.pitch = pitch;
+            userRef.on("value", function(userSnapshot) {
+              $rootScope.pitch.sponsor = userSnapshot.val();
+              $rootScope.bar = $rootScope.pitch.bar;
+              $rootScope.sponsorImg = 'img/' + pitch.sponsor.imgURL;
+              $rootScope.showSponserHeader = true;
+              start();
+            });
+          });
+        }
+
+      };
+
+
+
+      this.init = function(){
+        var pitchId = window.localStorage['pitchId'] || null;
+        var sponsorId = window.localStorage['sponsorId'] || null;
+        var returnVisit = window.localStorage['return'] || null;
+
+        var pitchRef = {};
+
+        if(returnVisit == true){
+          $rootScope.message = "Return Visitor";
+          $state.go('login');
+        }else if(pitchId && sponsorId) {
+          pitchRef = new Firebase("https://nuskin.firebaseio.com/users/" + sponsorId + '/pitches/' + pitchId);
+
+          $rootScope.message = 'found incomplete SignUp';
+          load(sponsorId, pitchId);
+        }else if(window.Branch) {
+          var branch = window.Branch;
+          branch.init("key_test_flpGUS7FifTtYfqYqyPvhackDqbU0UbQ", function (err, data) {
+            $rootScope.message = "Retrieved Branch Data";
+            if (!err) {
+              var prettyData = JSON.parse(data.data);
+
+              if (prettyData["+clicked_branch_link"]) {
+                $rootScope.message = "App install with passed in PitchID";
+
+
+                $rootScope.refPitchId = prettyData["+pitch_id"];
+                $rootScope.refSponsorId = prettyData["+sponsor_id"];
+
+
+
+                window.localStorage.pitchId = $rootScope.refPitchId;
+                window.localStorage.sponsorId = $rootScope.refSponsorId;
+                load($rootScope.refSponsorId, $rootScope.refPitchId);
+
+              } else {
+
+                findPitchByGeo();
+              }
+
+            } else {
+              $rootScope.message = "error" + err;
+            }
+          })
+
+        }else{
+          findPitchByGeo();
+        }
+
+        window.localStorage.initilized = true;
+      };
+
+
+
+      var findPitchByGeo = function(){
+        $rootScope.message = "Looking for Broadcasted Pitch";
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            var lat = Math.round(position.coords.latitude * 10);
+            var long = Math.round(position.coords.longitude * 10);
+            var geoLoc = "loc" + lat + "x" + long;
+            var pitchRef = new Firebase("https://nuskin.firebaseio.com/locations/" + encodeURI(geoLoc));
+            pitchRef.on("value", function (snapshot) {
+
+              var pitch = snapshot.val();
+              if (pitch == null) {
+                console.debug("*** pitch is null:");
+              } else {
+                $rootScope.pitch = pitch;
+                $rootScope.bar = pitch.bar;
+                $rootScope.sponsorImg = 'img/' + pitch.sponsor.imgURL;
+                $rootScope.showSponserHeader = true;
+                start();
+              }
+            })
+          });
+        }else{
+          $rootScope.message = "No Reference, No One Broadcasting, need to ask for Sponsor ID";
+        }
+
+
+      }
+
+
+
+
+
+
+
+
+
+
+      this.startPitch = function(){
+        start();
+      };
+
+      this.loadPitchByGeo = function(){
+        findPitchByGeo();
+      }
+
+      this.forward = function(){
+        $rootScope.index = parseInt($rootScope.index) + 1;
+
+        if($rootScope.index >= $rootScope.pitch.cards.length){
+          $state.go('office');
+        }else{
+          var nextCard = $rootScope.pitch.cards[$rootScope.index];
+          $state.go(nextCard.template, {"index": $rootScope.index });
+        }
+
+      };
+
+      this.back = function(){
+
+        if(parseInt($rootScope.index) == 0){
+          return;
+        }else{
+          $rootScope.index = parseInt($rootScope.index) - 1;
+          var nextCard = $rootScope.pitch.cards[$rootScope.index];
+          $state.go(nextCard.template, {"index": $rootScope.index });
+        }
+      };
+    })
+
 
 
     .service('UserService', function (){
@@ -74,7 +254,7 @@ angular.module('your_app_name.app.services', [])
      this.pitch = pitch;
     }
 
-    this.card = function(cardNumber){
+    this.simple = function(cardNumber){
       return pitch.cards[cardNumber - 1];
     };
 

@@ -1,0 +1,62 @@
+<ion-view ng-class="" class="profile-view" cache-view="false" view-title="Profile">
+  <ion-content has-bouncing='false' class="profile-content" delegate-handle="profile-scroll" class="has-header" on-swipe-left="onSwipeLeft()"  on-swipe-right="onSwipeRight()">
+    <div class="row profile-data">
+      <div class="col">
+        <ion-slide-box class="profile-slides" on-slide-changed="slideHasChanged($index)">
+          <ion-slide>
+            <div class="row slide-content">
+              <div class="col col-center user-data">
+                <!-- We need a wrapper with width set for the preload image directive -->
+                <div class="user-image-outer">
+                  <pre-img ratio="_1_1" helper-class="rounded-image">
+                    <img class="user-image" ng-src="img/sally.jpg" spinner-on-load>
+                	</pre-img>
+                </div>
+                <h2 class="user-name">Brynn Evans</h2>
+                <p class="user-resume">
+                  <b>64</b> Followers &nbsp;&nbsp;<b>23</b> Following
+                </p>
+              </div>
+            </div>
+          </ion-slide>
+          <ion-slide>
+            <div class="row slide-content">
+              <div class="col col-center user-data">
+                <p class="user-resume">
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                </p>
+              </div>
+            </div>
+          </ion-slide>
+        </ion-slide-box>
+      </div>
+    </div>
+    <div class="row user-interactions">
+      <div class="col">
+        <div class="row split-actions" >
+          <div class="col">
+            <button class="button button-block highlighted">
+              Contact
+            </button>
+          </div>
+          <div class="col">
+            <button class="button button-block">
+              Message
+            </button>
+          </div>
+      </div>
+    </div>
+
+
+      </div>
+    <br/><br/>
+    <div class="row ">
+      <div class="col-100 ">
+        <h3>My Why Story</h3>
+        <p>
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        </p>
+      </div>
+    <ion-nav-view class="profile-sub-views" name="profileContent"></ion-nav-view>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,33 @@
+<ion-modal-view class="auth-view modal-view">
+    <ion-header-bar>
+        <h1 class="title modal-title">Create Pitch</h1>
+        <a class="button button-clear" ng-click="newPitchDialog.hide()">Cancel</a>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="row form-wrapper edit-pitch-popup">
+            <div class="col">
+                <form name="recover_password_form" class="" novalidate>
+                    <div class="form-fields-outer list list-inset">
+                        <label class="item item-input item-floating-label">
+                            <input type="text" placeholder="Name" ng-model="newPitch.name">
+                        </label>
+                        <!--
+                        <div class="row product-options">
+                            <div class="col col-100 select-option-wrapper">
+                                <select ng-model="data.productOption">
+                                    <option value="simple" selected>Customer Sign Up</option>
+                                    <option value="product">Business Oppertunity</option>
+                                    <option value="3">Open</option>
+                                </select>
+                            </div>
+                        </div>-->
+
+                        <button type="submit" class="recover-password button button-block" ng-click="createPitch()" >
+                            Create
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ion-content>
+</ion-modal-view>
