@@ -511,6 +511,16 @@ angular.module('your_app_name.auth.controllers', [])
 
 
 
+        $ionicModal.fromTemplateUrl('views/auth/cards/edit/customer-account.html', {
+            cssClass: 'edit-pitch-popup',
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.prefillDialog = modal;
+        });
+
+
+
         $scope.selectPitch = function(id, pitch){
             pitch.id = id;
             $scope.pitch = pitch;
@@ -529,7 +539,9 @@ angular.module('your_app_name.auth.controllers', [])
             window.plugins.socialsharing.share('Rediscover natural ways to live better',
                 pitch.name,
                 'img/epoch.jpeg',
-                'http://pedro-nuskin.s3-website-us-west-2.amazonaws.com/#/p/' + pitch.id + '/' + authData.uid);
+               // 'http://pedro-nuskin.s3-website-us-west-2.amazonaws.com/#/p/' + pitch.id + '/' + authData.uid);
+                'http://nuskin.io/#/p/' + pitch.id + '/' + authData.uid);
+
 
         }
 
@@ -563,6 +575,10 @@ angular.module('your_app_name.auth.controllers', [])
 
 
         }
+
+
+
+
 
         $scope.edit = function(pitch){
 
@@ -638,6 +654,23 @@ angular.module('your_app_name.auth.controllers', [])
         FlowService.loadPitch(userId, pitchId);
 
 })
+
+    .controller('NSCheckoutCtrl', function($scope, $stateParams, $rootScope, $state, ShopService ){
+
+        var url = "https://ww.nuskin.com/content/nuskin/en_US/cart.html?orderSkus=";
+
+        var products = ShopService.getCartProducts();
+        products.forEach( function (product)
+        {
+            var x = arrayItem.prop1 + 2;
+            alert(x);
+        });
+
+
+
+
+
+    })
 
 
     .controller('ForgotPasswordCtrl', function($scope){

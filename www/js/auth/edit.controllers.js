@@ -47,6 +47,11 @@ angular.module('your_app_name.edit.controllers', [])
                 "template": "simple-checkout",
                 "name": "Check Out",
                 "icon": "cart.png"
+            },
+            {
+                "template": "simple",
+                "name": "Learn More",
+                "icon": "learn-more.png"
             }
 
         ]
@@ -78,6 +83,37 @@ angular.module('your_app_name.edit.controllers', [])
 
 
 
+        $ionicModal.fromTemplateUrl('views/auth/cards/edit/modals/edit-kit.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.editKitDialog = modal;
+        });
+
+
+
+
+
+
+        $ionicModal.fromTemplateUrl('views/auth/cards/edit/modals/edit-product.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.editProductDialog = modal;
+        });
+
+
+        $ionicModal.fromTemplateUrl('views/auth/cards/edit/modals/edit-video.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.editVideoDialog = modal;
+        });
+
+
+
+
+
         $ionicModal.fromTemplateUrl('views/auth/cards/edit/modals/add-card.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -89,10 +125,29 @@ angular.module('your_app_name.edit.controllers', [])
             $scope.addCardDialog.show();
         }
 
+
+
+
+
+
         $scope.addSelectedCard = function(card){
             $rootScope.editPitch.cards.push(card);
 
+
            save($rootScope.editPitch);
+
+            if(card.template ==  'starter-kit'){
+                $scope.editKitDialog.show();
+            }
+
+            if(card.template ==  'product'){
+                $scope.editProductDialog.show();
+            }
+
+            if(card.template ==  'video'){
+                $scope.editVideoDialog.show();
+            }
+
             $scope.addCardDialog.hide();
 
         }

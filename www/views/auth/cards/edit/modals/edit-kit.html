@@ -1,0 +1,26 @@
+<ion-view view-title="Product" >
+    <ion-header-bar>
+        <h1 class="title modal-title">Products in Kit</h1>
+        <a class="button button-clear" ng-click="editKitDialog.hide()">Cancel</a>
+    </ion-header-bar>
+    <ion-content class="has-header">
+        <div class="list list-inset">
+            <label class="item item-input">
+                <span class="input-label">Product one</span>
+                <input type="text" placeholder="Product one">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Product Two</span>
+                <input type="text" placeholder="Product Two">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Product Three</span>
+                <input type="text" placeholder="Product Three">
+            </label>
+            <button class="button button-positive button-block" ng-click="editKitDialog.hide()">
+                Submit
+            </button>
+
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,22 @@
+<ion-view view-title="Product" >
+    <ion-header-bar>
+        <h1 class="title modal-title">Product</h1>
+        <a class="button button-clear" ng-click="editProductDialog.hide()">Cancel</a>
+    </ion-header-bar>
+    <ion-content class="has-header">
+        <ion-list>
+            <ion-radio ng-model="choice" ng-value="A">Peppermint</ion-radio>
+            <ion-radio ng-model="choice" ng-value="B">Lavendar</ion-radio>
+            <ion-radio ng-model="choice" ng-value="C">Life Pak</ion-radio>
+            <ion-radio ng-model="choice" ng-value="D">ageLOC Dermatic Effects </ion-radio>
+            <ion-radio ng-model="choice" ng-value="E">Facial Spa</ion-radio>
+
+
+            <ion-toggle ng-model="sample" toggle-class="toggle-calm">Wholesale</ion-toggle>
+
+            <button class="button button-positive button-block" ng-click="editProductDialog.hide()">
+                Submit
+            </button>
+        </ion-list>
+    </ion-content>
+</ion-view>

@@ -1,10 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+<ion-view view-title="Pre fill Customer" class="shipping-address-view">
+    <ion-header-bar>
+        <h1 class="title modal-title">Pre Populate Pitch</h1>
+        <a class="button button-clear" ng-click="prefillDialog.hide()">Cancel</a>
+    </ion-header-bar>
+    <ion-content class="has-header">
+        <div class="list">
+            <div class="item item-divider shop-section-title">
+                <span class="title-copy">Customer Info</span>
+            </div>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Full Name</span>
+                <input type="text" placeholder="Full Name" ng-model="signupData.name">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Street Address </span>
+                <input type="text" placeholder="Street Address" ng-model="signupData.street">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">City</span>
+                <input type="text" placeholder="City" ng-model="signupData.city">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">State</span>
+                <input type="text" placeholder="State" ng-model="signupData.stateCd">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Postal Code</span>
+                <input type="text" placeholder="Postal Code" ng-model="signupData.postal">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">e-Mail</span>
+                <input type="text" placeholder="e-Mail" ng-model="signupData.email">
+            </label>
+            <!--<ion-toggle toggle-class="toggle-energized">Use as my default address</ion-toggle>-->
+            <div class="row padding">
+                <button class="button button-block button-energized save-address-btn" >
+                    Share
+                </button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

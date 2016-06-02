@@ -1,0 +1,17 @@
+<ion-view view-title="Product" >
+    <ion-header-bar>
+        <h1 class="title modal-title">Video</h1>
+        <a class="button button-clear" ng-click="editVideoDialog.hide()">Cancel</a>
+    </ion-header-bar>
+    <ion-content class="has-header">
+        <ion-list>
+            <ion-radio ng-model="choice" ng-value="'A'" >Essential Oils Video</ion-radio>
+            <ion-radio ng-model="choice" ng-value="'B'">AgeLOC Intro</ion-radio>
+            <ion-radio ng-model="choice" ng-value="'C'">Life Pak Video</ion-radio>
+
+            <button class="button button-positive button-block" ng-click="editVideoDialog.hide()">
+                Submit
+            </button>
+        </ion-list>
+    </ion-content>
+</ion-view>

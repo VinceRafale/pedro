@@ -40,6 +40,13 @@ angular.module('your_app_name', [
 
   $ionicPlatform.ready(function() {
 
+    if(window.Branch){
+      window.Branch.init('key_test_flpGUS7FifTtYfqYqyPvhackDqbU0UbQ');
+
+    }
+
+
+
     document.addEventListener('resume', onResume, false);
 
     FlowService.init();
@@ -309,6 +316,22 @@ angular.module('your_app_name', [
         cache: false,
         controller: "PitchesCtrl"
 
+
+      })
+
+      .state('community-pitches', {
+        url: "/community-pitches",
+        templateUrl: "views/auth/cards/community-pitches.html",
+        cache: false,
+        controller: "PitchesCtrl"
+
+      })
+
+      .state('corp-pitches', {
+        url: "/corp-pitches",
+        templateUrl: "views/auth/cards/corp-pitches.html",
+        cache: false,
+        controller: "PitchesCtrl"
 
       })
 

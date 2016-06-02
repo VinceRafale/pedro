@@ -70,6 +70,8 @@ angular.module('your_app_name.app.services', [])
 
 
       this.init = function(){
+
+
         var pitchId = window.localStorage['pitchId'] || null;
         var sponsorId = window.localStorage['sponsorId'] || null;
         var returnVisit = window.localStorage['return'] || null;
@@ -78,16 +80,24 @@ angular.module('your_app_name.app.services', [])
 
         if(returnVisit == true){
           $rootScope.message = "Return Visitor";
+          console.log("Return Visitor");
+
+
           $state.go('login');
         }else if(pitchId && sponsorId) {
           pitchRef = new Firebase("https://nuskin.firebaseio.com/users/" + sponsorId + '/pitches/' + pitchId);
 
           $rootScope.message = 'found incomplete SignUp';
+
+          console.log("found incomplete SignUp");
+
           load(sponsorId, pitchId);
         }else if(window.Branch) {
           var branch = window.Branch;
           branch.init("key_test_flpGUS7FifTtYfqYqyPvhackDqbU0UbQ", function (err, data) {
             $rootScope.message = "Retrieved Branch Data";
+            console.log("Retrieved Branch Data");
+
             if (!err) {
               var prettyData = JSON.parse(data.data);
 
@@ -125,6 +135,8 @@ angular.module('your_app_name.app.services', [])
 
       var findPitchByGeo = function(){
         $rootScope.message = "Looking for Broadcasted Pitch";
+        console.log("Looking for Broadcasted Pitch");
+
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function (position) {
             var lat = Math.round(position.coords.latitude * 10);
@@ -137,6 +149,8 @@ angular.module('your_app_name.app.services', [])
               if (pitch == null) {
                 console.debug("*** pitch is null:");
               } else {
+                console.log("Found for Broadcasted Pitch", pitch);
+
                 $rootScope.pitch = pitch;
                 $rootScope.bar = pitch.bar;
                 $rootScope.sponsorImg = 'img/' + pitch.sponsor.imgURL;
